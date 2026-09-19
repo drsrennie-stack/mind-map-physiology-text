@@ -18,7 +18,7 @@ Both tree layouts, mind map and outline, render the same DOM. Only CSS differs b
 |-----------|-------|--------|---------------|
 | 1.3.1 Info and Relationships | A | Met | Tree is a nested list with `role="tree"`, `role="treeitem"`, `role="group"`, `aria-level`, and `aria-expanded`. Headings run h1 then h2 with none skipped. Loop metadata is a definition list. |
 | 1.3.2 Meaningful Sequence | A | Met | Reading order is DOM order in both views. The mind map's horizontal arrangement comes from flex direction, not from repositioning, so nothing is read out of order. |
-| 1.4.1 Use of Color | A | Met | Node type is carried by a word in small capitals on every card, never by color. Branch identity is carried by position in the tree; color only makes that faster to scan. Loop edge polarity is carried by a plus or minus character and by a dashed line, as well as by color. |
+| 1.4.1 Use of Color | A | Met | Node type is carried by a word in small capitals on every card in both color modes, never by color alone. Branch identity is carried by position in the tree; color only makes that faster to scan. Loop edge polarity is carried by a plus or minus character and by a dashed line, as well as by color. |
 | 1.4.3 Contrast (Minimum) | AA | Met | See section 2. Every text pair is 5.38:1 or better. |
 | 1.4.6 Contrast (Enhanced) | AAA | Partly met | Navy body and label text reaches AAA. Terra-dark section labels and gray edge labels sit between AA and AAA. Palette-locked, see section 2. |
 | 1.4.10 Reflow | AA | Met | Verified at 390 px with zero horizontal page overflow. The mind map layout is replaced by the vertical outline below 900 px, and the layout toggle is hidden there rather than offered. |
@@ -36,7 +36,7 @@ Both tree layouts, mind map and outline, render the same DOM. Only CSS differs b
 | 2.5.8 Target Size (Minimum) | AA | Met | Controls are at least 24 by 24 px; control bar buttons are 40 px tall. The 22 px expand button is exempt under the spacing allowance and is duplicated by a full-card click target and by keyboard activation. |
 | 3.1.1 Language of Page | A | Met | `lang="en"`. |
 | 3.2.3 Consistent Navigation | AA | Met | The subject selector, map list, and control bar stay in the same place across every map and every subject area. |
-| 4.1.2 Name, Role, Value | A | Met | Every control is a real button, input, or select. State is exposed with `aria-expanded`, `aria-pressed`, and `aria-current`. The layout toggle is a labelled `role="group"` of two pressed-state buttons, and the trail is a labelled `nav` whose current step carries `aria-current`. |
+| 4.1.2 Name, Role, Value | A | Met | Every control is a real button, input, or select. State is exposed with `aria-expanded`, `aria-pressed`, and `aria-current`. The layout, focus, color, and explanation toggles are pressed-state buttons whose visible label states what the next press does. The trail is a labelled `nav` whose current step carries `aria-current`. |
 | 4.1.3 Status Messages | AA | Met | Search counts, depth changes, subject loading, and cross-subject jumps all announce through a `role="status"` region with `aria-live="polite"`. |
 
 ---
@@ -79,6 +79,8 @@ Ratios computed from the sRGB values in `styles.css` using the WCAG relative lum
 | Card outline and input borders `rgba(30,61,76,0.55)` resolving to `#81929A` | 3.09:1 on the page, 3.23:1 on white | Pass |
 | Focus indicator, navy on the page background | 11.01:1 | Pass |
 | Terra-dark loop arrow and dashed inhibition line | 5.62:1 | Pass |
+
+**Color by type.** In the second coloring mode the accent follows node type rather than branch: navy for structure at 11.49:1, terra cotta for process at 3.59:1, brushed gold for control at 2.90:1, terra-dark for clinical at 5.62:1. The same reasoning below applies to the gold, and the type tag printed on every card makes the color redundant in this mode too.
 
 **Brushed gold reasoning.** 1.4.11 covers graphical objects required to understand content. What a connector conveys is which parent a card belongs to, and physical position already conveys that without ambiguity in both layouts: a child sits directly to the right of its parent in the mind map and directly indented beneath it in the outline. Every connector is drawn at the same weight regardless of hue, so a reader who cannot resolve the gold still sees the line and still sees the structure. The hue adds branch identity, which is redundant with position. On that basis the gold branch is kept.
 

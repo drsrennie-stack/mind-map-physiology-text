@@ -85,6 +85,12 @@ The app loads the other subject file when the student follows the pointer, switc
 
 **Outline** stacks everything vertically with explanations shown. This is the view for reading.
 
+## Color by branch or by type
+
+Branch coloring gives each top-level branch its own color, running down its whole subtree. Type coloring gives every structure card navy, every process card terra cotta, every control card gold, wherever it sits, so the types group visually without any change to the maps.
+
+Wrapping the branches in type boxes would add a level and push nine of the nineteen maps past the five level cap, which is why this is a color mode rather than a structural change.
+
 ## One branch at a time
 
 On by default. Opening a card closes the others at that level, so you always see a single level of options side by side instead of scrolling past every branch you already opened. A trail above the map shows the path you have taken, and clicking any step in it takes you back to that level.

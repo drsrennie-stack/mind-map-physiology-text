@@ -62,6 +62,7 @@
           </select>
         </div>
         <button type="button" class="btn" id="focusBtn" aria-pressed="true">One branch at a time</button>
+        <button type="button" class="btn" id="colorBtn" aria-pressed="false">Color by type</button>
         <button type="button" class="btn" id="notesBtn" aria-pressed="false">Show explanations</button>
         <button type="button" class="btn" id="expandAll">Open everything</button>
         <button type="button" class="btn" id="collapseAll">Close everything</button>
@@ -90,7 +91,7 @@
           <div class="legend-item li-clinical"><span class="tag">Clinical</span>Where the card above it shows up in patient care.</div>
           <div class="legend-item li-reference"><span class="tag">See</span>A pointer to the one place the concept is written out in full.</div>
         </div>
-        <p class="side-title">Branch colors in this map</p>
+        <p class="side-title" id="swatchTitle">Branch colors in this map</p>
         <div class="branch-swatches" id="branchSwatches"></div>
       </section>
 

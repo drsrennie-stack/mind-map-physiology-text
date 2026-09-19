@@ -5,7 +5,7 @@
 
    Authored to node-edge-spec.md v1.1.
 
-   Scope. The membrane dynamics and neuronal signalling unit:
+   Scope. The membrane dynamics and neuronal signaling unit:
    how things cross a membrane, how that produces a resting
    potential, how a graded potential becomes an action potential,
    how it travels, and how it crosses a synapse. Topic order
@@ -446,7 +446,7 @@ var SUBJECT = {
                 children: [
                   { id: "np-ionotropic", label: "{{Ionotropic}} receptors are ion channels themselves, so the response is fast and brief", type: "structure", edge: "type-of" },
                   { id: "np-metabotropic", label: "{{Metabotropic}} receptors work through G proteins, so the response is slower and lasts longer", type: "structure", edge: "type-of" },
-                  { id: "np-ref-signaling", label: "See receptor location and signalling pathways, in Endocrine Physiology", type: "reference", edge: "see", ref: "receptor-signaling" }
+                  { id: "np-ref-signaling", label: "See receptor location and signaling pathways, in Endocrine Physiology", type: "reference", edge: "see", ref: "receptor-signaling" }
                 ] },
               { id: "np-removal", label: "How the signal is ended", type: "process", edge: "contains",
                 note: "A transmitter that stayed in the cleft would keep firing the next cell, so removal is as important as release.",
@@ -524,7 +524,7 @@ var SUBJECT = {
         { id: "rf-stim",     label: "Stimulus moves the variable",        x: 150, y: 60,  w: 250 },
         { id: "rf-sensor",   label: "Sensor detects the change",          x: 450, y: 60,  w: 230 },
         { id: "rf-afferent", label: "Afferent pathway",                   x: 740, y: 60,  w: 210 },
-        { id: "rf-center",   label: "Integrating centre",                 x: 740, y: 220, w: 210 },
+        { id: "rf-center",   label: "Integrating center",                 x: 740, y: 220, w: 210 },
         { id: "rf-efferent", label: "Efferent pathway",                   x: 450, y: 220, w: 210 },
         { id: "rf-target",   label: "Target carries out the response",    x: 150, y: 220, w: 250 },
         { id: "rf-back",     label: "Variable returns toward its set point", x: 450, y: 370, w: 290 }
@@ -538,7 +538,7 @@ var SUBJECT = {
         { from: "rf-target",   to: "rf-back",     sign: "+", label: "produces" },
         { from: "rf-back",     to: "rf-sensor",   sign: "-", label: "removes the signal", cp: [1250, 215] }
       ],
-      path: "Something moves a regulated variable away from its set point. A sensor detects the change and signals along an afferent pathway to an integrating centre, which compares the input against the set point and sends instructions out along an efferent pathway. The target carries out a response, the variable moves back toward the set point, and as it does the original signal at the sensor weakens. That weakening is the negative feedback, and it is what stops the response before it overshoots. Every reflex in the course fits this shape, so identifying the six parts is usually more useful than memorising the pathway."
+      path: "Something moves a regulated variable away from its set point. A sensor detects the change and signals along an afferent pathway to an integrating center, which compares the input against the set point and sends instructions out along an efferent pathway. The target carries out a response, the variable moves back toward the set point, and as it does the original signal at the sensor weakens. That weakening is the negative feedback, and it is what stops the response before it overshoots. Every reflex in the course fits this shape, so identifying the six parts is usually more useful than memorizing the pathway."
     }
   ],
 

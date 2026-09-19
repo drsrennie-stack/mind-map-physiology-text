@@ -310,7 +310,7 @@ Totals: 556 nodes, 7 loop diagrams, 19 maps, across 3 subject areas.
 | `np-ref-refractory` | See refractory periods, in The Action Potential | reference | 4 | Conduction Along the Axon | neurophysiology |
 | `np-ref-renal-water` | See water handling and urine concentration, in Renal Transport | reference | 3 | Osmosis and Tonicity | neurophysiology |
 | `np-ref-sglt` | See sodium-glucose cotransport in the proximal tubule, in Renal Transport | reference | 5 | Membrane Transport | neurophysiology |
-| `np-ref-signaling` | See receptor location and signalling pathways, in Endocrine Physiology | reference | 4 | The Synapse | neurophysiology |
+| `np-ref-signaling` | See receptor location and signaling pathways, in Endocrine Physiology | reference | 4 | The Synapse | neurophysiology |
 | `np-ref-summation` | See summation, in Graded Potentials | reference | 4 | The Synapse | neurophysiology |
 | `np-refractory` | Refractory periods | control | 2 | The Action Potential | neurophysiology |
 | `np-refractory-purpose` | What the {{refractory period}} accomplishes | control | 3 | The Action Potential | neurophysiology |

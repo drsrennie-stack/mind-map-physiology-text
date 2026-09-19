@@ -226,6 +226,15 @@ li.b1{--branch:var(--terra)}
 li.b2{--branch:var(--gold)}
 li.b3{--branch:var(--terra-dark)}
 
+/* Color by type instead of by branch. Three accents cover it, so nothing
+   repeats and the four-color cycle does not apply in this mode. The type
+   tag on every card still carries the type either way. */
+.color-type li.t-structure, .swatch.color-type.t-structure{--branch:var(--navy)}
+.color-type li.t-process, .swatch.color-type.t-process{--branch:var(--terra)}
+.color-type li.t-control, .swatch.color-type.t-control{--branch:var(--gold)}
+.color-type li.t-clinical, .swatch.color-type.t-clinical{--branch:var(--terra-dark)}
+.color-type li.t-reference{--branch:var(--navy)}
+
 /* ============================================================
    VIEW: MIND MAP, horizontal
    ============================================================ */

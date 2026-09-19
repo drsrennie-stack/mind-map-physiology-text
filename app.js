@@ -33,14 +33,15 @@ var EDGE_WORDS = {
 var el = {};
 ["subjectSelect","treeList","loopList","mapTitle","mapSummary","mapBody","search","depth",
  "expandAll","collapseAll","printBtn","status","glossaryList","viewMap","viewOutline",
- "notesBtn","branchSwatches","focusBtn","trail"].forEach(function(k){ el[k] = document.getElementById(k); });
+ "notesBtn","branchSwatches","focusBtn","trail","colorBtn","swatchTitle"].forEach(function(k){ el[k] = document.getElementById(k); });
 
 var state = {
   subjectId: null,
   map: null,            /* {kind:"tree"|"loop", id:""} */
   view: "map",          /* "map" | "outline" */
   notes: false,
-  focus: true           /* one branch at a time */
+  focus: true,          /* one branch at a time */
+  colorBy: "branch"     /* "branch" | "type" */
 };
 
 /* ---------- loading subjects on demand ---------- */
@@ -252,12 +253,40 @@ function buildNode(node, level, branchClass){
 function renderBranchSwatches(tree){
   if (!el.branchSwatches) return;
   el.branchSwatches.innerHTML = "";
+
+  if (state.colorBy === "type"){
+    el.swatchTitle.textContent = "Type colors";
+    [["structure","Structure"],["process","Process"],["control","Control"],["clinical","Clinical"]]
+      .forEach(function(pair){
+        var d = document.createElement("div");
+        d.className = "swatch color-type t-" + pair[0];
+        d.textContent = pair[1];
+        el.branchSwatches.appendChild(d);
+      });
+    return;
+  }
+
+  el.swatchTitle.textContent = "Branch colors in this map";
   (tree.root.children || []).forEach(function(child, i){
     var d = document.createElement("div");
     d.className = "swatch " + BRANCH_CLASSES[i % BRANCH_CLASSES.length];
     d.textContent = child.label;
     el.branchSwatches.appendChild(d);
   });
+}
+
+function setColorBy(mode){
+  state.colorBy = mode;
+  el.mapBody.classList.toggle("color-type", mode === "type");
+  el.colorBtn.setAttribute("aria-pressed", mode === "type" ? "true" : "false");
+  el.colorBtn.textContent = mode === "type" ? "Color by branch" : "Color by type";
+  if (state.map && state.map.kind === "tree"){
+    var t = subject().trees.filter(function(x){ return x.id === state.map.id; })[0];
+    if (t) renderBranchSwatches(t);
+  }
+  say(mode === "type"
+    ? "Colored by type. Every structure card is navy, every process card terra cotta, every control card gold, wherever it sits in the map."
+    : "Colored by branch. Each top-level branch keeps its own color all the way down.");
 }
 
 function toggle(li, force, skipFocus){
@@ -324,8 +353,8 @@ function applyDepth(maxLevel){
   renderTrail();
 }
 
-/* In the mind map view a parent is centred against its whole subtree, so
-   opening a deep map pushes the centre of the map far down the page.
+/* In the mind map view a parent is centerd against its whole subtree, so
+   opening a deep map pushes the center of the map far down the page.
    Bring it back into view whenever the shape of the tree changes. */
 function revealRoot(){
   var root = el.mapBody.querySelector('ul.tree > li.node > .node-card');
@@ -854,16 +883,17 @@ el.expandAll.addEventListener("click", function(){
   revealRoot();
   say(wasFocus
     ? "Every branch is open, so one branch at a time has switched off."
-    : "Every branch is open. The centre of the map is back in view.");
+    : "Every branch is open. The center of the map is back in view.");
 });
 el.focusBtn.addEventListener("click", function(){ setFocus(!state.focus); });
+el.colorBtn.addEventListener("click", function(){ setColorBy(state.colorBy === "type" ? "branch" : "type"); });
 el.collapseAll.addEventListener("click", function(){
   if (state.map && state.map.kind !== "tree") return;
   el.depth.value = "1";
   applyDepth(1);
   setRovingStart();
   revealRoot();
-  say("Closed back to the centre of the map.");
+  say("Closed back to the center of the map.");
 });
 el.printBtn.addEventListener("click", function(){
   if (state.map && state.map.kind === "tree") applyDepth(MAX_LEVEL);
