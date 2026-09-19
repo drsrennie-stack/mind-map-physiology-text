@@ -1,0 +1,378 @@
+/* ============================================================
+   Mind-Mapped Medical Sciences, stylesheet
+   Dr. Sharilyn Rennie
+
+   Two tree layouts share one DOM:
+     .view-map      horizontal mind map, branches fan out to the right
+     .view-outline  vertical indented outline, better for reading
+   Both are the same nested list, so semantics and keyboard
+   navigation are identical in either view.
+   ============================================================ */
+
+:root{
+  --navy:#1E3D4C;
+  --navy-deep:#142a36;
+  --navy-tint:#EDF1F3;
+  --gold:#B8924A;
+  --terra:#C2734D;
+  --terra-dark:#A0522D;
+  --white:#FFFFFF;
+  --offwhite:#FAFAF9;
+  --line:rgba(30,61,76,0.55);
+  --gray:#5A6872;
+  --rest-shadow:0 1px 3px rgba(0,0,0,0.08);
+  --hover-shadow:0 8px 16px rgba(0,0,0,0.10);
+  --branch:var(--navy);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--offwhite);
+  color:var(--navy);
+  font-family:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:16px;
+  line-height:1.55;
+}
+
+.skip-link{
+  position:absolute;left:-9999px;top:0;z-index:100;
+  background:var(--navy);color:var(--white);
+  padding:10px 16px;border-radius:0 0 6px 0;
+  font-weight:600;text-decoration:none;
+}
+.skip-link:focus{left:0}
+
+a{color:var(--navy);text-decoration:underline;text-underline-offset:2px}
+a:hover{color:var(--navy-deep)}
+:focus-visible{outline:3px solid var(--navy);outline-offset:2px;border-radius:3px}
+
+.wrap{max-width:1400px;margin:0 auto;padding:28px 20px 72px}
+
+/* ---------- header ---------- */
+.page-header{margin-bottom:24px}
+.eyebrow{
+  font-family:"DM Sans",system-ui,sans-serif;
+  font-size:12px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--terra-dark);font-weight:700;margin:0 0 10px;
+}
+h1{font-weight:800;font-size:clamp(1.7rem,4vw,2.5rem);line-height:1.15;margin:0 0 8px}
+.subhead{font-weight:600;font-size:clamp(1.02rem,2vw,1.3rem);color:var(--terra-dark);margin:0 0 14px}
+.usage{max-width:78ch;margin:0 0 6px;font-size:.96rem}
+.usage strong{font-weight:600}
+
+/* ---------- layout ---------- */
+.layout{display:grid;grid-template-columns:262px minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:900px){.layout{grid-template-columns:1fr}}
+
+.card{
+  background:var(--white);border:1px solid var(--line);
+  border-radius:10px;box-shadow:var(--rest-shadow);padding:18px;
+}
+
+/* ---------- sidebar ---------- */
+.sidebar{position:sticky;top:18px}
+@media (max-width:900px){.sidebar{position:static}}
+.side-title{
+  font-family:"DM Sans",system-ui,sans-serif;
+  font-size:12px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--terra-dark);font-weight:700;margin:14px 0 8px;
+}
+.side-title:first-child{margin-top:0}
+.map-list{list-style:none;margin:0;padding:0}
+.map-list li{margin:0 0 7px}
+.map-btn{
+  display:block;width:100%;text-align:left;
+  background:var(--white);border:1px solid var(--line);
+  border-left:3px solid var(--line);
+  border-radius:8px;padding:9px 12px;cursor:pointer;
+  font-family:inherit;font-size:.92rem;font-weight:500;color:var(--navy);
+  box-shadow:var(--rest-shadow);
+  transition:transform 200ms ease, box-shadow 200ms ease;
+}
+.map-btn:hover{transform:translateY(-2px);box-shadow:var(--hover-shadow)}
+.map-btn[aria-current="true"]{
+  border-color:var(--navy);border-width:1px 1px 1px 4px;
+  background:var(--navy-tint);font-weight:600;
+}
+
+/* ---------- controls ---------- */
+.controls{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:16px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field label{
+  font-family:"DM Sans",system-ui,sans-serif;
+  font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--terra-dark);font-weight:700;
+}
+input[type="search"],select{
+  font-family:inherit;font-size:.92rem;color:var(--navy);
+  background:var(--white);border:1px solid var(--line);
+  border-radius:8px;padding:9px 11px;min-height:40px;
+  max-width:100%;
+}
+input[type="search"]{min-width:0;width:260px;max-width:100%}
+#subjectSelect{width:100%}
+.btn{
+  font-family:inherit;font-size:.9rem;font-weight:600;color:var(--navy);
+  background:var(--white);border:1px solid var(--navy);
+  border-radius:8px;padding:9px 14px;min-height:40px;cursor:pointer;
+  box-shadow:var(--rest-shadow);
+  transition:transform 200ms ease, box-shadow 200ms ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--hover-shadow)}
+.btn[aria-pressed="true"]{background:var(--navy-tint);border-width:2px;padding:8px 13px}
+
+.status{font-size:.88rem;min-height:1.3em;margin:0 0 14px}
+
+/* ---------- drill trail ---------- */
+.trail{
+  display:flex;flex-wrap:wrap;align-items:center;gap:6px;
+  margin:0 0 12px;padding:9px 12px;
+  background:var(--white);border:1px solid var(--line);border-radius:8px;
+  box-shadow:var(--rest-shadow);
+}
+.trail[hidden]{display:none}
+.trail-label{
+  font-family:"DM Sans",system-ui,sans-serif;
+  font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--terra-dark);font-weight:700;margin-right:4px;
+}
+.crumb{
+  font-family:inherit;font-size:.88rem;font-weight:600;color:var(--navy);
+  background:var(--white);border:1px solid var(--line);border-radius:6px;
+  padding:4px 9px;min-height:26px;cursor:pointer;
+  transition:transform 200ms ease, box-shadow 200ms ease;
+}
+.crumb:hover{transform:translateY(-1px);box-shadow:var(--hover-shadow)}
+.crumb[aria-current="true"]{background:var(--navy-tint);border-color:var(--navy);cursor:default}
+.crumb[aria-current="true"]:hover{transform:none;box-shadow:none}
+.crumb-sep{color:var(--gray);font-size:.85rem}
+
+.map-head{margin:0 0 14px}
+.map-head h2{font-weight:600;font-size:1.4rem;color:var(--terra-dark);margin:0 0 5px}
+.map-head p{margin:0;font-size:.95rem;max-width:80ch}
+
+/* ============================================================
+   TREE, shared
+   ============================================================ */
+.tree-wrap{overflow-x:auto;padding:4px 2px 8px}
+ul.tree,ul.tree ul{list-style:none;margin:0;padding:0}
+li.node{position:relative;margin:0}
+/* the view rules below set display on ul.group, which would otherwise
+   beat the browser default for [hidden]; collapsing must always win */
+ul.group[hidden]{display:none !important}
+
+.node-card{
+  position:relative;background:var(--white);
+  border:1px solid var(--line);border-left:4px solid var(--branch);
+  border-radius:8px;padding:9px 12px;
+  box-shadow:var(--rest-shadow);
+  transition:transform 200ms ease, box-shadow 200ms ease;
+}
+.node-card:hover{transform:translateY(-2px);box-shadow:var(--hover-shadow)}
+li.node:focus-visible > .node-card,
+li.node.is-focused > .node-card{outline:3px solid var(--navy);outline-offset:2px}
+.t-clinical > .node-card{background:var(--navy-tint)}
+.t-reference > .node-card{border-style:dashed;border-left-style:dashed}
+li.node.has-kids > .node-card{cursor:pointer}
+
+.node-top{display:flex;flex-wrap:wrap;align-items:baseline;gap:7px}
+.twisty{
+  flex:0 0 auto;width:22px;height:22px;line-height:1;padding:0;
+  background:var(--white);border:1px solid var(--navy);border-radius:5px;
+  color:var(--navy);font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.twisty-spacer{flex:0 0 auto;width:22px;height:22px}
+
+.tag{
+  font-family:"DM Sans",system-ui,sans-serif;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+  color:var(--terra-dark);white-space:nowrap;
+}
+.t-structure .tag,.t-clinical .tag{color:var(--navy)}
+.edge-label{
+  font-family:"DM Sans",system-ui,sans-serif;
+  font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;
+  color:var(--gray);white-space:nowrap;
+}
+.node-label{font-weight:600;font-size:.98rem;flex:1 1 180px;min-width:0}
+.t-process .node-label,.t-control .node-label{font-weight:500}
+.child-count{
+  font-family:"DM Sans",system-ui,sans-serif;
+  font-size:11px;color:var(--gray);font-weight:500;white-space:nowrap;
+}
+.node-note{margin:6px 0 0 29px;font-size:.9rem;max-width:66ch}
+.notes-off .node-note{display:none}
+.notes-off .t-reference .node-note{display:block}
+
+mark{background:#F4E3C4;color:var(--navy);padding:0 2px;border-radius:2px}
+li.node.filtered-out{display:none}
+
+.ref-link{
+  font-family:inherit;font-size:.9rem;font-weight:600;color:var(--navy);
+  background:none;border:none;padding:0;cursor:pointer;text-align:left;
+  text-decoration:underline;text-underline-offset:2px;
+}
+
+/* branch colors, cycled. The palette supplies four usable accents,
+   so a map with more than four top-level branches repeats a color,
+   never on adjacent branches. */
+li.node{--branch:var(--navy)}
+ul.tree > li.node{--branch:var(--navy-deep)}
+li.b0{--branch:var(--navy)}
+li.b1{--branch:var(--terra)}
+li.b2{--branch:var(--gold)}
+li.b3{--branch:var(--terra-dark)}
+
+/* ============================================================
+   VIEW: MIND MAP, horizontal
+   ============================================================ */
+.view-map li.node{display:flex;align-items:center}
+.view-map li.node > .node-card{flex:0 0 auto;width:264px}
+.view-map ul.group{
+  position:relative;display:flex;flex-direction:column;justify-content:center;
+  padding-left:46px;
+}
+/* trunk stub, parent card out to the spine */
+.view-map ul.group::before{
+  content:"";position:absolute;left:0;top:50%;width:22px;height:1.5px;
+  background:var(--branch);
+}
+/* spine segment, drawn per child in that child's own branch color */
+.view-map ul.group > li.node::before{
+  content:"";position:absolute;left:-24px;top:0;bottom:0;width:1.5px;
+  background:var(--branch);
+}
+.view-map ul.group > li.node:first-child::before{top:50%}
+.view-map ul.group > li.node:last-child::before{bottom:50%}
+.view-map ul.group > li.node:only-child::before{display:none}
+/* branch stub, spine into the child card */
+.view-map ul.group > li.node::after{
+  content:"";position:absolute;left:-24px;top:50%;width:24px;height:1.5px;
+  background:var(--branch);
+}
+.view-map .node-note{max-width:100%;margin-left:0}
+.view-map .node-card{padding:8px 10px}
+/* a small gap so collapsed siblings read as a stack rather than a slab */
+.view-map ul.group > li.node{margin:5px 0}
+
+/* ============================================================
+   VIEW: OUTLINE, vertical
+   ============================================================ */
+.view-outline li.node{padding-left:22px}
+.view-outline ul.tree > li.node{padding-left:0}
+.view-outline .node-card{margin:6px 0;max-width:76ch}
+.view-outline ul.group{position:relative;margin-left:20px;padding-left:24px}
+.view-outline ul.group > li.node::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:1.5px;background:var(--branch);
+}
+.view-outline ul.group > li.node:last-child::before{bottom:auto;height:27px}
+.view-outline ul.group > li.node::after{
+  content:"";position:absolute;left:0;top:27px;width:22px;height:1.5px;background:var(--branch);
+}
+
+/* Narrow screens always use the outline. A horizontal mind map on a phone
+   is a scroll maze, so the view switch is hidden rather than offered. */
+@media (max-width:900px){
+  .view-map li.node{display:block;padding-left:22px}
+  .view-map ul.tree > li.node{padding-left:0}
+  .view-map li.node > .node-card{width:auto;max-width:100%;margin:6px 0}
+  .view-map ul.group{display:block;margin-left:20px;padding-left:24px}
+  .view-map ul.group::before{display:none}
+  .view-map ul.group > li.node::before{left:0;top:0;bottom:0;width:1.5px}
+  .view-map ul.group > li.node:first-child::before{top:0}
+  .view-map ul.group > li.node:last-child::before{bottom:auto;height:27px}
+  .view-map ul.group > li.node:only-child::before{display:block;top:0;height:27px;bottom:auto}
+  .view-map ul.group > li.node::after{left:0;top:27px;width:22px}
+  .view-toggle{display:none}
+}
+
+/* ---------- glossary term ---------- */
+.term{
+  font-family:inherit;font-size:inherit;color:var(--navy);
+  background:var(--navy-tint);border:none;border-bottom:1px dashed var(--navy);
+  padding:0 3px;border-radius:3px 3px 0 0;cursor:pointer;font-weight:600;
+}
+.term-def{
+  display:block;margin:7px 0 0;padding:9px 12px;
+  background:var(--navy-tint);border:1px solid var(--navy);border-radius:8px;
+  font-size:.89rem;
+}
+.term-def[hidden]{display:none}
+.term-def .term-word{font-weight:700}
+
+/* ---------- loop diagrams ---------- */
+.loop-svg{width:100%;height:auto;display:block;margin:6px 0 16px}
+.loop-node rect{fill:var(--white);stroke:var(--navy);stroke-width:1.5}
+.loop-node text{font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:14px;font-weight:600;fill:var(--navy)}
+.loop-edge{stroke:var(--navy);stroke-width:1.5;fill:none}
+.loop-edge.neg{stroke:var(--terra-dark);stroke-dasharray:6 4}
+.sign-badge circle{fill:var(--white);stroke:var(--navy);stroke-width:1.5}
+.sign-badge.neg circle{stroke:var(--terra-dark)}
+.sign-badge text{font-family:"DM Sans",system-ui,sans-serif;font-size:15px;font-weight:700;fill:var(--navy)}
+.sign-badge.neg text{fill:var(--terra-dark)}
+.edge-caption{font-family:"DM Sans",system-ui,sans-serif;font-size:11px;font-weight:500;fill:var(--gray)}
+.loop-meta{margin:0 0 14px}
+.loop-meta dt{
+  font-family:"DM Sans",system-ui,sans-serif;
+  font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--terra-dark);font-weight:700;margin-top:10px;
+}
+.loop-meta dd{margin:3px 0 0;font-size:.94rem;max-width:80ch}
+
+/* ---------- legend and glossary panel ---------- */
+.legend{margin-top:24px}
+.legend h2{font-size:1.1rem;font-weight:600;color:var(--terra-dark);margin:0 0 10px}
+.legend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:10px}
+.legend-item{
+  border:1px solid var(--line);border-left:3px solid var(--navy);
+  border-radius:8px;padding:9px 11px;background:var(--white);font-size:.89rem;
+}
+.legend-item .tag{display:block;margin-bottom:3px}
+.li-clinical{background:var(--navy-tint)}
+.li-reference{border-left-style:dashed}
+.branch-swatches{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.swatch{
+  border:1px solid var(--line);border-left:4px solid var(--branch);
+  border-radius:8px;padding:6px 10px;font-size:.85rem;background:var(--white);
+}
+.glossary-list{margin:12px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:12px}
+.glossary-list > div{border:1px solid var(--line);border-left:3px solid var(--navy);border-radius:8px;padding:10px 12px}
+.glossary-list dt{font-weight:700;font-size:.92rem;margin:0 0 3px}
+.glossary-list dd{margin:0;font-size:.89rem}
+
+.page-footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--line);font-size:.87rem}
+.page-footer p{margin:0 0 6px}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important;scroll-behavior:auto !important}
+  .map-btn:hover,.btn:hover,.node-card:hover{transform:none}
+}
+
+/* ---------- print: always the outline ---------- */
+@media print{
+  body{background:#fff}
+  .sidebar,.controls,.skip-link,.twisty,.status,.page-footer{display:none !important}
+  .layout{display:block}
+  .wrap{max-width:none;padding:0}
+  .card{box-shadow:none;border:none;padding:0}
+  .tree-wrap{overflow:visible}
+  .view-map li.node{display:block;padding-left:22px}
+  .view-map ul.tree > li.node{padding-left:0}
+  .view-map li.node > .node-card{width:auto;max-width:100%;margin:5px 0}
+  .view-map ul.group{display:block;margin-left:20px;padding-left:24px}
+  .view-map ul.group::before{display:none}
+  .view-map ul.group > li.node::before{left:0;top:0;bottom:0}
+  .view-map ul.group > li.node:first-child::before{top:0}
+  .view-map ul.group > li.node:last-child::before{bottom:auto;height:27px}
+  .view-map ul.group > li.node::after{left:0;top:27px;width:22px}
+  .node-card{box-shadow:none;break-inside:avoid;page-break-inside:avoid}
+  li.node{break-inside:avoid;page-break-inside:avoid}
+  .node-note{display:block !important}
+  .term-def{display:block !important}
+  .loop-svg{break-inside:avoid;page-break-inside:avoid}
+  h1{font-size:22pt}
+}

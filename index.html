@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mind-Mapped Medical Sciences</title>
+<meta name="description" content="Hierarchical concept maps for the medical sciences, with feedback loop diagrams, branch colors, and a clickable glossary.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to the maps</a>
+
+<div class="wrap">
+
+  <header class="page-header">
+    <p class="eyebrow">Mind-Mapped Medical Sciences</p>
+    <h1>Concept Maps</h1>
+    <p class="subhead">Hierarchical maps with feedback loop diagrams</p>
+    <p class="usage">Click any card to open it. With <strong>One branch at a time</strong> on, opening a card closes the others at that level, so you always see one level side by side instead of scrolling past everything you already opened. The trail above the map shows where you are, and clicking any step in it takes you back. Turn the button off if you would rather leave several branches open at once. Arrow keys work either way: right opens, left closes, up and down move between cards.</p>
+    <p class="usage">Start with explanations hidden and use the map to test yourself, then turn them on to check. Cards marked <strong>SEE</strong> point to the one place a concept is written out in full, including in another subject area.</p>
+  </header>
+
+  <div class="layout">
+
+    <nav class="sidebar card" aria-label="Subject areas and maps">
+      <div class="field">
+        <label for="subjectSelect">Subject area</label>
+        <select id="subjectSelect"></select>
+      </div>
+      <p class="side-title">Hierarchical maps</p>
+      <ul class="map-list" id="treeList"></ul>
+      <p class="side-title">Loop diagrams</p>
+      <ul class="map-list" id="loopList"></ul>
+    </nav>
+
+    <main id="main" tabindex="-1">
+
+      <div class="controls">
+        <div class="field view-toggle">
+          <label id="viewLabel">Layout</label>
+          <div role="group" aria-labelledby="viewLabel" style="display:flex;gap:8px">
+            <button type="button" class="btn" id="viewMap" aria-pressed="true">Mind map</button>
+            <button type="button" class="btn" id="viewOutline" aria-pressed="false">Outline</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="search">Search this map</label>
+          <input type="search" id="search" placeholder="Try: insulin, feedback, PTH" autocomplete="off">
+        </div>
+        <div class="field">
+          <label for="depth">Open to level</label>
+          <select id="depth">
+            <option value="1">1 only</option>
+            <option value="2">1 to 2</option>
+            <option value="3" selected>1 to 3</option>
+            <option value="4">1 to 4</option>
+            <option value="5">All 5</option>
+          </select>
+        </div>
+        <button type="button" class="btn" id="focusBtn" aria-pressed="true">One branch at a time</button>
+        <button type="button" class="btn" id="notesBtn" aria-pressed="false">Show explanations</button>
+        <button type="button" class="btn" id="expandAll">Open everything</button>
+        <button type="button" class="btn" id="collapseAll">Close everything</button>
+        <button type="button" class="btn" id="printBtn">Print this map</button>
+      </div>
+
+      <nav class="trail" id="trail" aria-label="Where you are in this map" hidden></nav>
+
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+
+      <section class="card" aria-labelledby="mapTitle">
+        <div class="map-head">
+          <h2 id="mapTitle">Loading</h2>
+          <p id="mapSummary"></p>
+        </div>
+        <div id="mapBody" class="tree-wrap view-map notes-off"></div>
+      </section>
+
+      <section class="card legend" aria-labelledby="legendTitle">
+        <h2 id="legendTitle">Reading the maps</h2>
+        <p class="usage">Each card carries a word in small capitals saying what kind of thing it is, and a second word saying how it relates to the card it came from.</p>
+        <div class="legend-grid">
+          <div class="legend-item"><span class="tag">Structure</span>A physical thing: organ, tissue, cell, or molecule.</div>
+          <div class="legend-item"><span class="tag">Process</span>Something happening: synthesis, transport, secretion, or action.</div>
+          <div class="legend-item"><span class="tag">Control</span>Regulation: a stimulus, a feedback step, a rhythm, or a set point.</div>
+          <div class="legend-item li-clinical"><span class="tag">Clinical</span>Where the card above it shows up in patient care.</div>
+          <div class="legend-item li-reference"><span class="tag">See</span>A pointer to the one place the concept is written out in full.</div>
+        </div>
+        <p class="side-title">Branch colors in this map</p>
+        <div class="branch-swatches" id="branchSwatches"></div>
+      </section>
+
+      <section class="card legend" aria-labelledby="glossaryTitle">
+        <h2 id="glossaryTitle">Glossary</h2>
+        <p class="usage">Terms used across this subject area. Where one appears with a dashed underline inside a map, clicking it shows the same definition without leaving the branch.</p>
+        <dl class="glossary-list" id="glossaryList"></dl>
+      </section>
+
+      <footer class="page-footer">
+        <p>Mind-Mapped Medical Sciences. Built to the project node and edge specification, version 1.1.</p>
+        <p>Dr. Sharilyn Rennie</p>
+        <p><a href="node-edge-spec.md" target="_top">Node and edge specification</a> &middot; <a href="build/ID-INDEX.md" target="_top">Node ID index</a> &middot; <a href="compliance-notes.md" target="_top">Accessibility compliance notes</a></p>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<script src="build/subject-index.js"></script>
+<script src="app.js"></script>
+
+<script>
+/* iframe height sender: Kajabi and GitHub Pages embeds */
+(function(){
+  var frameId = "mms-maps";
+  try { var q = new URLSearchParams(window.location.search).get("id"); if (q) frameId = q; } catch (e) {}
+  function sendHeight(){
+    var h = Math.max(
+      document.body.scrollHeight, document.body.offsetHeight,
+      document.documentElement.clientHeight,
+      document.documentElement.scrollHeight, document.documentElement.offsetHeight
+    );
+    try { window.parent.postMessage({ id: frameId, height: h }, "*"); } catch (e) {}
+  }
+  window.addEventListener("load", sendHeight);
+  window.addEventListener("resize", sendHeight);
+  if (window.ResizeObserver) new ResizeObserver(sendHeight).observe(document.body);
+  setTimeout(sendHeight, 250);
+  setTimeout(sendHeight, 1200);
+})();
+</script>
+
+</body>
+</html>
