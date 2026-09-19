@@ -135,11 +135,11 @@ var SUBJECT = {
 
           { id: "np-osmolarity", label: "Osmolarity describes the solution", type: "process", edge: "contains",
             children: [
-              { id: "np-osmolarity-def", label: "The number of osmoles of solute per litre of solution", type: "process", edge: "causes",
+              { id: "np-osmolarity-def", label: "The number of osmoles of solute per liter of solution", type: "process", edge: "causes",
                 children: [
                   { id: "np-osmolarity-counts", label: "Every dissolved particle counts, whether or not it can cross a membrane", type: "process", edge: "causes",
                     note: "You can measure it without a cell anywhere in sight, which is the clue that it is a property of the solution alone." },
-                  { id: "np-osmolarity-units", label: "It has units, usually milliosmoles per litre", type: "process", edge: "causes" }
+                  { id: "np-osmolarity-units", label: "It has units, usually milliosmoles per liter", type: "process", edge: "causes" }
                 ] }
             ] },
 

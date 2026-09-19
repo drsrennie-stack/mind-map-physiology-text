@@ -291,8 +291,8 @@ Totals: 556 nodes, 7 loop diagrams, 19 maps, across 3 subject areas.
 | `np-one-way` | It keeps the action potential travelling in one direction | process | 4 | The Action Potential | neurophysiology |
 | `np-osmolarity` | Osmolarity describes the solution | process | 2 | Osmosis and Tonicity | neurophysiology |
 | `np-osmolarity-counts` | Every dissolved particle counts, whether or not it can cross a membrane | process | 4 | Osmosis and Tonicity | neurophysiology |
-| `np-osmolarity-def` | The number of osmoles of solute per litre of solution | process | 3 | Osmosis and Tonicity | neurophysiology |
-| `np-osmolarity-units` | It has units, usually milliosmoles per litre | process | 4 | Osmosis and Tonicity | neurophysiology |
+| `np-osmolarity-def` | The number of osmoles of solute per liter of solution | process | 3 | Osmosis and Tonicity | neurophysiology |
+| `np-osmolarity-units` | It has units, usually milliosmoles per liter | process | 4 | Osmosis and Tonicity | neurophysiology |
 | `np-osmosis` | Osmosis and Tonicity | process | 1 | Osmosis and Tonicity | neurophysiology |
 | `np-other-pumps` | Other examples: the calcium ATPase and the proton-potassium ATPase | structure | 4 | Membrane Transport | neurophysiology |
 | `np-passive` | Passive transport, no ATP spent | process | 2 | Membrane Transport | neurophysiology |

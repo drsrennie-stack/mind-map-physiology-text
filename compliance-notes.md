@@ -158,6 +158,6 @@ Reviewed by Dr. Sharilyn Rennie, September 19, 2026.
 
 Automated checks run in headless Chromium: ARIA tree structure, roving tab stop, keyboard traversal, independent branch state, card-click toggling, cross-subject reference navigation in both directions, on-demand subject loading, search filtering and restoration, layout and explanation toggles, loop diagram bounding boxes against their viewBox, and horizontal overflow at 390 px.
 
-Data validated by `node tools/build.js` against `node-edge-spec.md`: 391 nodes across 2 subject areas, 12 hierarchical maps, 5 loop diagrams, 29 reference chips all resolving with 13 of them crossing subject areas, no duplicate IDs anywhere in the project, no node past level five, no clinical or reference node carrying children, no unrecognized type or edge, and no em dash in any label, note, or loop description.
+Data validated by `node tools/build.js` against `node-edge-spec.md`: 391 nodes across 2 subject areas, 12 hierarchical maps, 5 loop diagrams, 29 reference chips all resolving with 13 of them crossing subject areas, no duplicate IDs anywhere in the project, no node past level five, no clinical or reference node carrying children, no unrecognized type or edge, no em dash in any label, note, or loop description, and no British spelling anywhere in the data or the app files.
 
 This document is required before the project is considered complete, per the project standard.

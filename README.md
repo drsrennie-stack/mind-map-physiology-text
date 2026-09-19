@@ -35,6 +35,8 @@ node tools/build.js
 
 This validates every map against the specification and regenerates `build/`. If it reports errors it writes nothing, so a broken map cannot reach the app.
 
+It also enforces two writing rules: no em dashes, and American spelling. Both are checked in the map data and in the app files, and both stop the build rather than warning. The spelling word list is at the top of `tools/build.js` if you want to add to it.
+
 ---
 
 ## Adding a map to an existing subject

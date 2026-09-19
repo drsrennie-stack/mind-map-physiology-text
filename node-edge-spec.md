@@ -253,6 +253,7 @@ It loads every file in `maps/`, validates all of it against this document, and r
 - Loop nodes fit inside their own viewBox, loop edges connect real nodes, and every edge carries a valid sign
 - Every `{{term}}` marked in a note is defined in some subject's glossary
 - No em dash anywhere. Every string in the file is swept rather than a fixed list of fields, so a field added later is covered without anyone remembering to add a check for it. The error names the exact path, for example `glossary.natriuresis`.
+- American spelling. British spellings are rejected the same way, across the map data and across `index.html`, `app.js`, `styles.css`, and the project's own markdown. For a file the error gives a line number; for map data it gives the path. The word list sits at the top of `tools/build.js` with instructions for adding to it, and it covers the categories that actually turn up in this material: the -our and -re endings, the -ise and -yse verb endings including the depolarize family, and the medical ae, oe, haem, and sulph families. Words that are correct in American English either way, such as exercise, analysis, and concentration, are deliberately absent and are covered by a false-positive test. Note that a document describing this rule cannot quote the rejected spellings, because the check reads its own documentation too.
 
 It warns, without blocking, when the same label appears on more than one concept-bearing node, which usually means a branch was written twice instead of pointed at.
 
